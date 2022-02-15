@@ -1,0 +1,36 @@
+body{background-color: lightgray;}
+
+.likes{
+  color: blue;
+  font-size: .8em;
+  position: relative;
+}
+
+.like-list{
+  width: 100px;
+  color: black;
+  padding: 4px;
+  background: #efefef;
+  border-radius: 5%;
+  border: 1px solid black;
+  visibility: hidden;
+  position: absolute;
+  z-index: 1;
+}
+
+.likes:hover .like-list{
+    visibility: visible;
+}
+
+.user{
+  width:60%;
+  margin: auto;
+}
+
+@media screen and (max-width: 800px) {
+  .user{width: 80%}
+}
+
+@media screen and (max-width: 450px) {
+  .user{width: 90%}
+}
