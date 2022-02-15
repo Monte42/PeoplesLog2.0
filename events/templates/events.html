@@ -1,0 +1,84 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load crispy_forms_tags %}
+
+{% block title %}Events{% endblock %}
+
+{% block content %}
+  <div class="container text-center">
+    <br>
+    <h2>Events</h2>
+  </div>
+  <br><hr><br>
+  <!-- Check for events -->
+  {% if events %}
+    <div class="container">
+      <div class="row">
+        <!-- Listing Events -->
+        {% for event in events %}
+          <!-- Checking if Event is active -->
+          {% if event.is_still_active %}
+            <div class="col-12 col-sm-12 col-md-6 col-lg-3">
+              <div class="card">
+                <!-- Card Head -->
+                <div class="card-header">
+                  <strong>{{ event.title }}</strong>
+                </div>
+                <div class="card-body">
+                  <h6 class="card-title">{{event.event_date}} @ {{event.event_time}}</h6>
+                  <hr>
+                  <!-- Card Body with Link -->
+                  <!-- Below |slice:"start:end" is used to take the first 100 charaters of the bio -->
+                  <p class="card-text">{{event.description|slice:":75"}}</p>
+                  <h6>By {{event.event_creator}}</h6>
+                  <h6>{{event.attendace}} people are going</h6>
+                  <a href="/events/{{event.id}}/" class="btn btn-primary">Learn More</a>
+                </div>
+              </div>
+              <br><hr><br>
+            </div>
+          {% endif %}
+        {% endfor %}
+      </div>
+    </div>
+    <br>
+  {% else %}
+  <div class="container mb-5 bt-5 text-center">
+    <br><h4>There are currently no scheduled events</h4><br>
+    <hr style="width: 50%;"><br>
+    <h5>Please, feel free to plan any type of non-violent event</h5>
+    <br><hr><br>
+  </div>
+  {% endif %}
+  <div class="container mb-5">
+    <!-- BlogForm Button -->
+    <button type="button" class="btn btn-secondary btn-lg btn-block" data-toggle="modal" data-target="#exampleModalCenter">
+      Create Event
+    </button>
+
+    <!-- Create EventForm modal -->
+    <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+      <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalCenterTitle">Create Event</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <form method="POST">
+              {% csrf_token %}
+              {{ event_form | crispy }}
+              <button type="submit" class="btn btn-secondary">Create Event</button>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+    <br>
+  </div>
+  <br><br><br>
+
+
+{% endblock %}

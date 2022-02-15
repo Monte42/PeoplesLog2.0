@@ -1,0 +1,31 @@
+{% extends 'base.html' %}
+
+{% block title %}{{event_id.title}}{% endblock %}
+{% block content %}
+  <br><br>
+  <div class="container">
+    <h3>{{event_id.title}}</h3>
+    <h5>{{event_id.event_date}} @ {{event_id.event_time}}</h5>
+    <h5>Organized By: {{event_id.event_creator}}</h5>
+    <p>Held at: {{event_id.event_location}}</p>
+    <br><hr><br><br>
+     <div style="width: 90%;" class="container">
+       <p>{{event_id.description}}</p>
+     </div>
+  </div>
+  <br><br><hr><br>
+  <div class="container d-flex justify-content-around">
+    <h6>{{event_id.attendace}} people are going</h6>
+
+    {% if is_user_going %}
+      <button class="btn btn-secondary">Already Going</button>
+    {% else %}
+      <form method="POST">
+        {% csrf_token %}
+        {{ event_attendance_form }}
+        <button type="submit" class="btn btn-secondary">Attend Event</button>
+      </form>
+    {% endif %}
+  </div>
+  <br><br><br>
+{% endblock %}
