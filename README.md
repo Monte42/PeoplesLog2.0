@@ -1,8 +1,8 @@
 # PeoplesLog2.0
-Updated and cleaned version of Peoples Log
+<h3>Updated and cleaned version of Peoples Log</h3>
 
 Removed unnecessary packages <br>
-Used enviromental variables to hide passwords, keys, ect.
-Created new databases for storage.
-Moved static files to AWS storage so it could be found
+Used enviromental variables to hide passwords, keys, ect. <br>
+Created new databases for storage<br>
+Moved static files to AWS storage so it could be found<br>
 Incorporated Infinate Scrolling 
