@@ -1,0 +1,52 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load crispy_forms_tags %}
+
+{% block title %}All Users{% endblock %}
+
+{% block content %}
+<div class="container">
+  <div class="text-center">
+    <h1>All Users</h1>
+    <hr>
+  </div>
+  <br><br>
+  <div class="infinite-container">
+    {% for user in users %}
+    <div class="infinite-item">
+
+
+      <div class="card user">
+        <div class="card-header">
+          <strong>{{ user.username }}</strong>
+        </div>
+        <div class="card-body">
+          {% if user.user_image %}
+          <img height="80vh" width="80vw" class="rounded-circle" src="{{user.user_image.url}}" alt="">
+          {% else %}
+          <img height="80vh" width="80vw" class="rounded-circle" src="{% static 'img/blankUser.png' %}" alt="">
+          {% endif %}
+          <h5 class="card-title">{{user.first_name}} {{user.last_name}}</h5>
+          <!-- Below |slice:"start:end" is used to take the first 100 charaters of the bio -->
+          <p class="card-text">{{user.bio|slice:":75"}}</p>
+          <a href="/account/userProfile/{{user.username}}/" class="btn btn-primary">Visit Profile</a>
+        </div>
+      </div>
+      <br><hr><br>
+
+    </div>
+    {% endfor %}
+  </div>
+
+  {% if users.has_next %}
+    <a class="infinite-more-link" href="?page={{ users.next_page_number }}"></a>
+  {% endif %}
+
+  <div class="loading text-center" style="display: none;">
+    <div class="spinner-border text-primary" role="status">
+      <span class="sr-only">Loading...</span>
+    </div>
+  </div>
+</div>
+<br>
+{% endblock %}

@@ -1,0 +1,41 @@
+{% extends 'base.html' %}
+{% load crispy_forms_tags %}
+
+{% block title %}Sign In{% endblock %}
+
+{% block content %}
+<br>
+  <div class="container mt-5 mb-5">
+    <h3>Sign In</h3>
+    <div class="row">
+      <div class="col-12 col-sm-12 col-md-12 col-lg-6 text-center">
+        <form enctype="multipart/form-data" method="POST">
+          {% csrf_token %}
+          <p>{{ form | crispy }}</p>
+          <button type="submit" class="btn btn-secondary mr-5">
+            Sign In
+          </button>
+        </form>
+        <br><br>
+      </div>
+
+      <div class="col-12 col-sm-12 col-md-12 col-lg-6 text-center">
+        <h3>Not a member yet?</h3>
+        <a href="{% url 'register' %}" class="btn btn-secondary">
+          Sign Up
+        </a>
+      </div>
+    </div>
+  </div>
+  <br><br>
+
+  <!-- Have to add footer here and add fixed-bottom to class -->
+  <footer id="myFoot" class=" bg-dark text-white p-2 text-center mt-5">
+    <div class="container">
+      <p class="text-center">Website developed by</p>
+      <a href="http://webgnd.com/" target="_blank">WebGround</a>
+    </div>
+  </footer>
+
+
+{% endblock %}

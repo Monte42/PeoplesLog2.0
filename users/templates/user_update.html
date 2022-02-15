@@ -1,0 +1,23 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load crispy_forms_tags %}
+
+{% block title %}Update Account{% endblock %}
+
+{% block content %}
+{% if not form.is_valid %}
+  <div class="container">
+    <h3>Update Account</h3>
+    <div class="container">
+      <form enctype="multipart/form-data" method="POST">
+        {% csrf_token %}
+        <p>{{ form | crispy }}</p>
+        <button type="submit" name="button" class="btn btn-secondary mr-5">
+          Update
+        </button>
+      </form>
+      <br>
+    </div>
+  </div>
+{% endif %}
+{% endblock %}

@@ -1,0 +1,31 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load crispy_forms_tags %}
+
+{% block title %}{{account_owner.username}}{% endblock %}
+
+{% block content %}
+  <br>
+  <div class="container">
+    <h1>{{account_owner.first_name}} {{account_owner.last_name}}</h1>
+    {% if account_owner.user_image %}
+      <img height="200px" width="200px" class="rounded-circle" src="{{account_owner.user_image.url}}" alt="">
+    {% else %}
+      <img height="200px" width="200px" class="rounded-circle" src="{% static 'img/blankUser.png' %}" alt="">
+    {% endif %}
+    <br><br>
+    <h3>Nickname: {{account_owner.username}}</h3>
+    <p>Date Joined: {{account_owner.date_joined}}</p>
+    <hr>
+    <br>
+    <p><strong>Birth Day</strong>: {{account_owner.birth_date}}</p>
+    <p><strong>Bio</strong>: {{account_owner.bio}}</p>
+    <p><strong>Hobbies</strong>: {{account_owner.hobbies}}</p>
+    <p><strong>Favorite TV Shows</strong>: {{account_owner.favorite_tv}}</p>
+    <p><strong>Favorite Books</strong>: {{account_owner.favorite_books}}</p>
+    <p><strong>Current Employment</strong>: {{account_owner.work}}</p>
+    <p><strong>Studies</strong>: {{account_owner.schools}}</p>
+    <!-- <p><strong>email</strong>: {{account_owner.email}}</p> -->
+    <br>
+  </div>
+{% endblock %}
