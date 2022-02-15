@@ -1,0 +1,57 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="utf-8">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+    <script src="https://kit.fontawesome.com/aea6695a49.js" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="{% static 'css/base.css' %}">
+    <title>{% block title %}{% endblock %}</title>
+  </head>
+  <body>
+
+    {% if request.user.is_authenticated %}
+      {% include 'navbar.html' %}
+    {% endif %}
+
+    <div style="text-align: center;" class="jumbotron jumbotron-fluid">
+      <div class="container">
+        <h1 class="display-5">The PeoplesLog.com</h1>
+        <p class="lead">Where you can speak freely, and not be regulated.</p>
+      </div>
+    </div>
+
+    {% block content %}
+    {% endblock %}
+
+    {% if location == 'signin' %}
+
+    {% else %}
+    {{request.get_full_path}}
+      {% include 'footer.html' %}
+    {% endif %}
+
+    <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
+
+    <!-- These three are for paginator to work -->
+    <script src="{% static 'js/jquery-2.2.4.min.js' %}"></script> <!-- very important to use 2.2.4 -->
+    <script src="{% static 'js/jquery.waypoints.min.js' %}"></script>
+    <script src="{% static 'js/infinite.min.js' %}"></script>
+
+    <!-- Here we use all three above to create function that auto loads next page -->
+    <script>
+      var infinite = new Waypoint.Infinite({
+        element: $('.infinite-container')[0],
+        onBeforePageLoad: function () {
+          $('.loading').show();
+        },
+        onAfterPageLoad: function ($items) {
+          $('.loading').hide();
+        }
+      });
+    </script>
+  </body>
+</html>
