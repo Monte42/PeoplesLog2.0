@@ -1,0 +1,103 @@
+{% load static %}
+
+  <!-- ----------- -->
+  <!-- HANDLE POST -->
+  <!-- ----------- -->
+  <div style="width: 95%;" class="container">
+    <div class="row">
+      <div class="col-12 col-sm-12 col-md-8 col-lg-8">
+        <!-- infinite container/item for paginator -->
+         <div class="infinite-container">
+            {% for post in posts %}
+              <div class="infinite-item">
+                {% if post.id %}
+
+                <!-- HANDLE LINK POST -->
+                  {% if post.link %}
+                    {% include 'post_with_link.html' %}
+
+                  <!-- HANDLE OTHER POST -->
+                  {% else %}
+                    {% include 'post_standard.html' %}
+
+                  {% endif %}
+                {% endif %}
+                <br>
+              </div>
+            {% endfor %}
+          </div>
+          <br>
+          <!-- this blank link is for waypoints to auto call -->
+          {% if posts.has_next %}
+            <a class="infinite-more-link" href="?page={{ posts.next_page_number }}"></a>
+          {% endif %}
+
+          <div class="loading text-center" style="display: none;">
+            <div style="background:darkgray;" class="p-5">
+              <div class="spinner-border text-primary" role="status">
+                <span class="sr-only">Loading...</span>
+              </div>
+            </div>
+          </div>
+      </div>
+
+      <div class="col-12 col-sm-12 col-md-4 col-lg-4">
+        <h5>Recent Blogs</h5>
+        <hr>
+        {% for blog in first_blogs %}
+          <!-- Blog Card -->
+          <div class="card">
+            <!-- Header -->
+            <div class="card-header">
+              <h6>{{ blog.title }}</h6>
+            </div>
+            <!-- SubHead -->
+            <div class="card-body">
+              <h6 class="card-title">{{blog.author.first_name}} {{blog.author.last_name}}</h6>
+              {% if blog.author.user_image %}
+                <img height="40px" width="40px" class="rounded-circle" src="{{blog.author.user_image.url}}" alt="">
+              {% else %}
+                <img height="40px" width="40px" class="rounded-circle" src="{% static 'img/blankUser.png' %}" alt="">
+              {% endif %}
+
+              <!-- Content and Link -->
+              <p class="card-text">{{blog.subject}}</p>
+              <a href="/blogs/{{blog}}/" class="btn btn-primary btn-sm">Read More</a>
+            </div>
+          </div>
+          <hr>
+        {% endfor %}
+
+        <a href="{% url 'all_blogs' %}" class="btn btn-primary btn-sm">Read More</a>
+        <br><br><br>
+        <h5>Upcoming Events</h5>
+        <hr>
+        {% for event in first_events %}
+          {% if event.is_still_active %}
+            <div class="card">
+              <!-- Card Head -->
+              <div class="card-header">
+                <h6>{{ event.title }}</h6>
+              </div>
+              <div class="card-body">
+                <p class="card-title">{{event.event_date}} @ {{event.event_time}}</p>
+                <hr>
+                <!-- Card Body with Link -->
+                <!-- Below |slice:"start:end" is used to take the first 100 charaters of the bio -->
+                <p class="card-text">{{event.description|slice:":75"}}</p>
+                <hr>
+                <p>By {{event.event_creator}}</p>
+                <p>{{event.attendace}} people are going</p>
+                <a href="/events/{{event.id}}/" class="btn btn-primary">Learn More</a>
+              </div>
+            </div>
+            <hr>
+          {% endif %}
+        {% endfor %}
+        <a href="{% url 'all_events' %}" class="btn btn-primary btn-sm">More Events</a>
+      </div>
+    </div>
+
+
+
+  </div>

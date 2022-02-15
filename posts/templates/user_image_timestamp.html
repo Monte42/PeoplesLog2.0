@@ -1,0 +1,11 @@
+{% load static %}
+
+{% if post.author.user_image %}
+  <img height="40px" width="40px" class="rounded-circle" src="{{post.author.user_image.url}}" alt="">
+{% else %}
+  <img height="40px" width="40px" class="rounded-circle" src="{% static 'img/blankUser.png' %}" alt="">
+{% endif %}
+<div class="ml-2">
+  &nbsp; ~ {{post.author}}<br>
+  <span style="font-size:.8em;" class="ml-3">{{post.create_date}}</span>
+</div>

@@ -1,0 +1,52 @@
+<div class="container d-flex justify-content-between">
+
+  <!-- Handel Like display -->
+  {% if reply.like_count == 1 %}
+    <span class="likes">
+      {{reply.like_count}} like
+      <span class="like-list">
+        {% for like in reply_likes %}
+          {% if like.reply == reply %}
+            {{like.user}}
+          {% endif %}
+        {% endfor%}
+      </span>
+    </span>
+  {% elif reply.like_count >= 2 %}
+    <span class="likes">
+      {{reply.like_count}} likes
+      <span class="like-list">
+        {% for like in reply_likes %}
+          {% if like.reply == reply %}
+            {{like.user}}<br>
+          {% endif %}
+        {% endfor%}
+      </span>
+    </span>
+  {% else %}
+    <span class="likes">0 Likes</span>
+  {% endif %}
+
+
+
+  <!-- handel like button -->
+  {% if reply in user_reply_likes %}
+  <button style="border:none;" type="submit" name="reply_like" class="btn btn-outline-primary" disabled>
+    <i class="far fa-thumbs-up"></i>
+  </button>
+  {% endif %}
+
+  {% if reply not in user_reply_likes %}
+  <!-- Liked, but not by usre -->
+  <form class="d-inline-flex" method="POST">
+    {% csrf_token %}
+    {{reply_like_form}}
+    <input type="hidden" name="reply_id_like" value="{{reply.id}}">
+    <input type="hidden" name="like_reply" value="reply_like">
+    <button style="border:none;" type="submit" name="reply_like" class="btn btn-outline-primary">
+      <i class="far fa-thumbs-up"></i>
+    </button>
+  </form>
+  {% endif %}
+
+</div>

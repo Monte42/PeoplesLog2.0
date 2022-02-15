@@ -1,0 +1,52 @@
+<div class="container d-flex justify-content-between">
+
+  <!-- Handel Like display -->
+  {% if post.like_count == 1 %}
+    <span class="likes">
+      {{post.like_count}} like
+      <span class="like-list">
+        {% for like in post_likes %}
+          {% if like.post == post %}
+            {{like.user}}
+          {% endif %}
+        {% endfor%}
+      </span>
+    </span>
+  {% elif post.like_count >= 2 %}
+    <span class="likes">
+      {{post.like_count}} likes
+      <span class="like-list">
+        {% for like in post_likes %}
+          {% if like.post == post %}
+            {{like.user}}<br>
+          {% endif %}
+        {% endfor%}
+      </span>
+    </span>
+  {% else %}
+    <span class="likes">0 Likes</span>
+  {% endif %}
+
+
+
+  <!-- handel like button -->
+  {% if post in user_post_likes %}
+  <button style="border:none;" type="submit" name="post_like" class="btn btn-outline-primary" disabled>
+    <i class="far fa-thumbs-up"></i>
+  </button>
+  {% endif %}
+
+  {% if post not in user_post_likes %}
+  <!-- Liked, but not by usre -->
+  <form class="d-inline-flex" method="POST">
+    {% csrf_token %}
+    {{post_like_form}}
+    <input type="hidden" name="post_id_like" value="{{post.id}}">
+    <input type="hidden" name="like_post" value="post_like">
+    <button style="border:none;" type="submit" name="post_like" class="btn btn-outline-primary">
+      <i class="far fa-thumbs-up"></i>
+    </button>
+  </form>
+  {% endif %}
+
+</div>

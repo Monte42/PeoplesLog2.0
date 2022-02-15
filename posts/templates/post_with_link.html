@@ -1,0 +1,30 @@
+{% load static %}
+{% load crispy_forms_tags %}
+
+<div class="card">
+  <div class="card" style="width: 100%;">
+    <div class="card-body">
+      <h6 class="card-title d-inline-flex">
+
+        <!-- HANDEL USER IMAGE & NAME -->
+        {% include 'user_image_timestamp.html' %}
+      </h6>
+      <!-- Post Content -->
+      <div class="text-center mb-4">
+        <p class="card-text">{{post.content}}</p>
+        <a href="{{post.link}}" target="blank" class="stretched-link"></a>
+      </div>
+
+      <!-- Embeded Link -->
+      <iframe width="100%" height="300" src="{{post.link}}" frameborder="0"
+      allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
+      scrolling="no" autoplay allowfullscreen></iframe>
+
+    </div>
+  </div>
+  <br>
+  {% include 'post_like.html' %}
+  <hr>
+  {% include 'comment.html' %}
+  <br>
+</div>

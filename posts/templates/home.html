@@ -1,0 +1,30 @@
+{% extends 'base.html' %}
+
+{% block title %}Peoples Log{% endblock %}
+
+{% block content %}
+
+
+  <div class="container">
+    <h3 class="text-center">Community Wall</h3>
+    <br><br>
+
+
+  {% include 'post_form.html' %}
+
+  {% if posts %}
+    {% include 'post.html' %}
+  {% else %}
+  <div class="container text-center mx-3">
+    <h3 class="mt-3">No Posts Yet</h3><br>
+    <hr>
+    <br><br>
+    <p><strong>Be the first the create a post</strong></p>
+    <p>Or wait for someone else to spark a conversation</p>
+    <br><br>
+    <hr>
+  </div>
+  {% endif %}
+</div><br><br>
+
+{% endblock %}

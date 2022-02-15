@@ -1,0 +1,47 @@
+{% load static %}
+{% load crispy_forms_tags %}
+
+<div class="container">
+  <form method="POST">
+    {% csrf_token %}
+    {{ commentform | crispy }}
+    <input type="hidden" name="parent_id" value="{{ post.id }}">
+    <input type="hidden" name="create_comment" value="comment">
+    <button type="submit" name="comment" class="btn btn-secondary btn-sm">Comment</button>
+  </form>
+    <br>
+    {% if comments %}
+    <div class="container">
+      {% for comment in comments %}
+        {% if comment.post == post %}
+        <div style="background: lightgray;" class="card mb-1">
+          <div class="card-body">
+            <h6 class="card-title d-inline-flex">
+
+              <!-- HANDEL AUTHOR IMAGE -->
+              {% if comment.author.user_image %}
+                <img height="40px" width="40px" class="rounded-circle" src="{{comment.author.user_image.url}}" alt="">
+              {% else %}
+                <img height="40px" width="40px" class="rounded-circle" src="{% static 'img/blankUser.png' %}" alt="">
+              {% endif %}
+              <div class="ml-2">
+                &nbsp; ~ {{comment.author}}<br>
+                <span style="font-size:.8em;" class="ml-3">{{comment.create_date}}</span>
+              </div>
+            </h6>
+
+            <!-- HANDEL COMMENT CONTENT -->
+            <p class="card-text">{{ comment.content }}</p>
+
+            {% include 'comment_like.html' %}
+          </div>
+        </div>
+         {% include 'replies.html' %}
+        {% endif %}
+      {% endfor %}
+    </div>
+    {% else %}
+    {% endif %}
+  <br>
+
+</div>
