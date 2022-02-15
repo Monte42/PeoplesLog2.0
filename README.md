@@ -1,7 +1,7 @@
 # PeoplesLog2.0
 Updated and cleaned version of Peoples Log
 
-Removed unnecessary packages
+Removed unnecessary packages <br>
 Used enviromental variables to hide passwords, keys, ect.
 Created new databases for storage.
 Moved static files to AWS storage so it could be found
