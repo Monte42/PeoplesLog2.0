@@ -1,0 +1,125 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load crispy_forms_tags %}
+{% block title %}Blogs{% endblock %}
+
+{% block content %}
+<div class="container text-center">
+  <div class="row">
+    <div class="col-12 col-sm-12 col-md-6 col-lg-6">
+      <div style="width: 70%;" class="container">
+        <!-- BlogForm Button -->
+        <button type="button" class="btn btn-secondary btn-lg btn-block" data-toggle="modal" data-target="#exampleModalCenter">
+          Create Blog
+        </button>
+
+        <!-- BlogForm modal -->
+        <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+          <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalCenterTitle">Create Blog</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+                </button>
+              </div>
+              <div class="modal-body">
+                <form method="POST">
+                  {% csrf_token %}
+                  {{ blog_form | crispy }}
+                  <input type="hidden" name="create_blog" value="blog">
+                  <button type="submit" name="blog" class="btn btn-secondary">Post Blog</button>
+                </form>
+              </div>
+            </div>
+          </div>
+        </div>
+        <br>
+      </div>
+    </div>
+    <div class="col-12 col-sm-12 col-md-6 col-lg-6">
+      <h5>Search for an Author</h5>
+      <form class="form-inline justify-content-around" method="post">
+        {% csrf_token %}
+        <select  class="form-control" name="user">
+          <option value="all">All Blogs</option>
+          {% for user in users %}
+            <option value="{{user}}">{{user}}</option>
+          {% endfor %}
+        </select>
+        <input type="hidden" name="user_find" value="search_user">
+        <button type="submit" name="user_search" class="btn btn-secondary mr-5">Search</button>
+      </form>
+    </div>
+  </div>
+</div>
+<br><br>
+
+
+
+
+
+<!-- Listing the Blogs -->
+{% if blogs %}
+
+  <div class="container">
+    <div class="infinite-container">
+      {% for blog in blogs %}
+      <div class="infinite-item">
+        <!-- Blog Card -->
+        <div class="mx-5 card">
+          <!-- Header -->
+          <div class="card-header">
+            <h5>{{ blog.title }}</h5>
+          </div>
+          <!-- SubHead -->
+          <div class="card-body">
+            {% if blog.author.user_image %}
+            <img height="50px" width="50px" class="rounded-circle" src="{{blog.author.user_image.url}}" alt="">
+            {% else %}
+            <img height="50px" width="50px" class="rounded-circle" src="{% static 'img/blankUser.png' %}" alt="">
+            {% endif %}
+            <h5 class="card-title">{{blog.author.first_name}} {{blog.author.last_name}}</h5>
+
+            <!-- Content and Link -->
+            <p class="card-text">{{blog.subject}}</p>
+            <a href="/blogs/{{blog}}/" class="btn btn-primary btn-sm">Read More</a>
+          </div>
+        </div>
+        <br>
+      </div>
+      {% endfor %}
+    </div>
+  </div><br><br>
+
+
+
+  {% if blogs.has_next %}
+    <a class="infinite-more-link" href="?page={{ blogs.next_page_number }}"></a>
+  {% endif %}
+
+  <div class="loading text-center" style="display: none;">
+    <div class="spinner-border text-primary" role="status">
+      <span class="sr-only">Loading...</span>
+    </div>
+  </div>
+
+{% else %}
+  <div class="container">
+    <div class="container text-center">
+      <h3>No blogs currently available</h3>
+      <hr>
+      <br><br>
+      <div class="container">
+        <h4>The author you searched for has not shared any blogs,</h4>
+        <br><br>
+        <hr>
+        <br><br>
+        <h5>or there hasn't been any blogs created yet,...</h5>
+      </div>
+    </div>
+  </div>
+  <br><br><br><br>
+{% endif %}
+
+{% endblock %}
